@@ -2,6 +2,8 @@
     <string name="app_name">TripTracker</string>
     <string name="email_hint">Email</string>
     <string name="login_button_label">LOG IN</string>
-    <string name="sign_up_text">Sign Up!</string>
+    <string name="signup_text">Sign Up!</string>
     <string name="password_hint">Password</string>
+    <string name="name_hint">Name</string>
+    <string name="signup_button_label">SIGN ME UP</string>
 </resources>
