@@ -6,8 +6,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import com.backendless.Backendless;
 
-public class MainActivity extends AppCompatActivity {
+public class LoginActivity extends AppCompatActivity {
 
     EditText mEmailEditText;
     EditText mPasswordEditText;
@@ -15,6 +16,10 @@ public class MainActivity extends AppCompatActivity {
     Button mLoginButton;
     TextView mSignUpTextView;
     Button mSignUpButton;
+
+    Backendless.initApp( this,
+    getString(R.string.APP_Id),
+    getString(R.string.API_KEY));
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
