@@ -179,8 +179,16 @@ public class TripListFragment extends ListFragment {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
 
-			// todo: Activity 3.1.4
-            return null;
+            if (convertView == null){
+                // todo: Activity 3.1.4	                convertView = getActivity().getLayoutInflater().inflate(R.layout.fragment_trip_list_item, null);
+                return null;	            }
+            Trip trip = getItem(position);
+            TextView tripName = (TextView)convertView.findViewById(R.id.trip_list_item_textName);
+            tripName.setText(trip.getName());
+            Log.i(TAG, trip.getName());
+            TextView tripStartDate = (TextView)convertView.findViewById(R.id.trip_list_item_textStartDate);
+            tripStartDate.setText(DateFormat.format("MM-dd-yyyy", trip.getStartDate()));
+            return convertView;
 		
         }
     }
@@ -193,8 +201,37 @@ public class TripListFragment extends ListFragment {
 
     private void refreshTripList() {
 
-		// todo: Activity 3.1.4
+        /* 3.1.4 Part 3 */
+        BackendlessUser user = Backendless.UserService.CurrentUser();
+        BackendlessDataQuery query = new BackendlessDataQuery();
+        query.setWhereClause("ownerId='" + user.getObjectId() + "'");
 
+        Backendless.Persistence.of(Trip.class).find(query, new BackendlessCallback<BackendlessCollection<Trip>>() {
+            @Override
+            public void handleResponse(BackendlessCollection<Trip> response) {
+                Log.d(TAG, response.getData().toString());
+                mTrips.clear();
+                for (Trip trip : response.getData()){
+                    mTrips.add(trip);
+                }
+                ((TripAdapter)getListAdapter()).notifyDataSetChanged();
+            }
+
+            @Override
+            public void handleFault(BackendlessFault fault) {
+                Log.e(TAG, fault.toString());
+            }
+        });
+
+    }
+    /* 3.1.4 */
+    /*
+    refresh the list of trips when the TripActivity is done
+     */
+    @Override
+    public void onResume() {
+        refreshTripList();
+        super.onResume();
     }
 
 
